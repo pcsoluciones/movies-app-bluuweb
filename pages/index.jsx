@@ -33,13 +33,12 @@ export default function Home({movies}) {    // revive el props destructurado
 }
 
 export async function getServerSideProps() {
-
   try {
     await conectarDB()
     const res = await Movie.find({})   // devolverá la colección completa
     console.log("Respuesta de getServerSideProps() 🚀👀")
 
-    // antes hacer un recorrido de todos los objetos y convertir el objeto extraño _id a string
+    // antes hacer un recorrido de todos los objetos, se debe convertir el objeto extraño _id a string
     const movies = res.map( doc => {
       const movie = doc.toObject()
       movie._id = `${movie._id}`  // convierte a string como toString()
