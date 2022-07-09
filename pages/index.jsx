@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import conectarDB from '../lib/dbConnect'
 import Movie from '../models/Movie'
 
@@ -15,12 +16,20 @@ export default function Home({movies}) {    // revive el props destructurado
 
       <main className='container text-danger'>
         <h1>Movies</h1>
+
+        <Link href="/new">
+          <a className='btn btn-primary w-100 mb-2'>Agregar</a>
+        </Link>
+
         {
           movies.map(({_id, title, plot}) => (
             <div className='card mb-2' key={_id}>
               <div className="car-body">
                 <div className="h5 text-uppercase">{title}</div>
                 <p className="fw-light">{plot}</p>
+                <Link href={`${_id}`}>
+                    <a className="btn btn-success btn-sm me-2">Más info ...</a>
+                </Link>
               </div>
             </div>
 
@@ -45,7 +54,7 @@ export async function getServerSideProps() {
       return movie
     })
 
-    console.log(res)
+    //console.log(res)
     return {props: {movies: movies}}
 
   } catch (error) {
